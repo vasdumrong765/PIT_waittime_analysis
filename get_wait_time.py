@@ -9,7 +9,6 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 
-
 # Record time
 record_time = now = datetime.datetime.now()
 
@@ -56,4 +55,4 @@ out = pd.DataFrame({
 out['Wait_time_MIN'] = pd.to_numeric(out['Wait_time_MIN'].str.replace('Min', ''), errors='coerce')
 out['Data_load_dt']=record_time
 out.to_csv("PIT_security_wait_time.csv", mode='a', index=False, header=False)
-print("successfully ran the script")
+print("successfully ran the script - Get TSA wait time")
