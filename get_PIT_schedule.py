@@ -81,6 +81,7 @@ for flight in flights:
 
 # Create a pandas DataFrame from the flight records
 df = pd.DataFrame(flight_records)
+df['production_load_dt']=production_load_time
 df_nocodeshare = df[df['Is_Codeshare']==False]
 
 # Display the DataFrame

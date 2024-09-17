@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime as dt
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -9,8 +9,9 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 
-# Record time
-record_time = now = datetime.datetime.now()
+## Record production_load_time
+production_load_time = dt.now()
+print(production_load_time)
 
 # PGH airport website uses javascript elements that load after html
 # Need to combine selenium webpage interaction with bs4 to get the correct information
@@ -46,13 +47,13 @@ soup = BeautifulSoup(html_source,'html.parser')
 
 out = pd.DataFrame({
         'Location':['TSA_Pre', 'Main', 'First_Class', 'Alt_Checkpoint'],
-        'Wait_time_MIN':[
+        'Wait_time_minutes':[
             soup.find('strong', {'id': 'tsalabel'}).text.strip(),
             soup.find('strong', {'id': 'mainwaitlabel'}).text.strip(),
             soup.find('strong', {'id': 'firstclasslabel'}).text.strip(),
             soup.find('strong', {'id': 'altwaitlabel'}).text.strip()]
       })
-out['Wait_time_MIN'] = pd.to_numeric(out['Wait_time_MIN'].str.replace('Min', ''), errors='coerce')
-out['Data_load_dt']=record_time
+out['Wait_time_minutes'] = pd.to_numeric(out['Wait_time_MIN'].str.replace('Min', ''), errors='coerce')
+out['production_load_dt']=production_load_time
 out.to_csv("PIT_security_wait_time.csv", mode='a', index=False, header=False)
 print("successfully ran the script - Get TSA wait time")
