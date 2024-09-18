@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
+import chromedriver_autoinstaller
+chromedriver_autoinstaller.install()
 
 ## Record production_load_time
 production_load_time = dt.now()
