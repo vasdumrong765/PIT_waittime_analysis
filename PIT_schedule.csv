@@ -134,3 +134,71 @@
 1583,PIT,11:54,DFW,13:51,American Airlines,AA,False,,2024-09-18 05:51:14.565467
 233,PIT,11:59,DUJ,12:54,Southern Airways Express,6G,False,,2024-09-18 05:51:14.565467
 1317,PIT,12:00,BNA,12:30,Southwest Airlines,WN,False,,2024-09-18 05:51:14.565467
+1486,PIT,06:00,BOS,07:35,JetBlue,B6,False,,2024-09-18 06:54:06.159608
+3574,PIT,06:00,EWR,07:38,United Airlines,UA,False,Operated by Republic Airways on behalf of United Airlines,2024-09-18 06:54:06.159608
+2242,PIT,06:00,MSP,07:25,Delta Air Lines,DL,False,,2024-09-18 06:54:06.159608
+1504,PIT,06:00,ATL,07:45,Delta Air Lines,DL,False,,2024-09-18 06:54:06.159608
+5690,PIT,06:07,BOS,08:00,Delta Air Lines,DL,False,Operated by Republic Airways on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+586,PIT,06:15,BWI,07:20,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+3679,PIT,06:20,IAD,07:28,United Airlines,UA,False,Operated by Republic Airways on behalf of United Airlines,2024-09-18 06:54:06.159608
+5822,PIT,06:20,LGA,07:44,Delta Air Lines,DL,False,Operated by Republic Airways on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+1358,PIT,06:20,ORD,07:02,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+1668,PIT,06:25,DTW,07:33,Delta Air Lines,DL,False,,2024-09-18 06:54:06.159608
+8464,PIT,06:29,SCE,07:20,Wiggins Airways,WIG,False,,2024-09-18 06:54:06.159608
+2491,PIT,06:30,IAH,08:33,United Airlines,UA,False,,2024-09-18 06:54:06.159608
+1675,PIT,06:30,FLL,09:14,Spirit Airlines,NK,False,,2024-09-18 06:54:06.159608
+3087,PIT,06:35,MCO,08:50,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+1197,PIT,06:36,MIA,09:20,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+8920,PIT,06:40,YYZ,07:48,Air Canada,AC,False,Operated by Jazz on behalf of Air Canada,2024-09-18 06:54:06.159608
+154,PIT,06:50,ATL,08:30,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+8463,PIT,06:54,SCE,07:45,Wiggins Airways,WIG,False,,2024-09-18 06:54:06.159608
+340,PIT,06:59,DFW,08:58,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+1803,PIT,07:00,ORD,07:42,United Airlines,UA,False,,2024-09-18 06:54:06.159608
+2367,PIT,07:05,SFO,09:30,United Airlines,UA,False,,2024-09-18 06:54:06.159608
+1383,PIT,07:05,ATL,08:50,Delta Air Lines,DL,False,,2024-09-18 06:54:06.159608
+4044,PIT,07:10,LAS,08:40,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+4531,PIT,07:15,RDU,08:38,American Airlines,AA,False,Operated by Republic Airways on behalf of American Airlines,2024-09-18 06:54:06.159608
+8465,PIT,07:19,SCE,08:10,Wiggins Airways,WIG,False,,2024-09-18 06:54:06.159608
+5753,PIT,07:23,JFK,09:00,Delta Air Lines,DL,False,Operated by Republic Airways on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+4388,PIT,07:30,BNA,08:00,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+1885,PIT,07:40,PHX,09:08,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+152,PIT,07:45,LNS,09:17,Southern Airways Express,6G,False,,2024-09-18 06:54:06.159608
+1140,PIT,07:45,TPA,10:00,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+5151,PIT,08:00,SDF,09:04,UPS,5X,False,,2024-09-18 06:54:06.159608
+384,PIT,08:00,CLT,09:31,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+4436,PIT,08:00,DCA,09:12,American Airlines,AA,False,Operated by Republic Airways on behalf of American Airlines,2024-09-18 06:54:06.159608
+999,PIT,08:01,PHL,09:14,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+5642,PIT,08:02,LGA,09:30,Delta Air Lines,DL,False,Operated by Republic Airways on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+3669,PIT,08:10,EWR,09:47,United Airlines,UA,False,Operated by Republic Airways on behalf of United Airlines,2024-09-18 06:54:06.159608
+2143,PIT,08:10,ATL,09:58,Delta Air Lines,DL,False,,2024-09-18 06:54:06.159608
+2064,PIT,08:15,DEN,09:46,United Airlines,UA,False,,2024-09-18 06:54:06.159608
+4610,PIT,08:17,LGA,09:41,American Airlines,AA,False,Operated by Republic Airways on behalf of American Airlines,2024-09-18 06:54:06.159608
+2999,PIT,08:21,ORD,09:05,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+468,PIT,08:25,MEM,08:57,FedEx,FX,False,,2024-09-18 06:54:06.159608
+304,PIT,08:30,BFD,09:25,Southern Airways Express,6G,False,,2024-09-18 06:54:06.159608
+3461,PIT,08:49,ORD,09:39,United Airlines,UA,False,Operated by Republic Airways on behalf of United Airlines,2024-09-18 06:54:06.159608
+4568,PIT,08:50,JFK,10:30,American Airlines,AA,False,Operated by Republic Airways on behalf of American Airlines,2024-09-18 06:54:06.159608
+3643,PIT,09:00,MDW,09:20,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+4186,PIT,09:01,EWR,10:30,United Airlines,UA,False,Operated by GoJet Airlines on behalf of United Airlines,2024-09-18 06:54:06.159608
+183,PIT,09:15,DEN,10:35,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+1286,PIT,09:33,BOS,11:12,JetBlue,B6,False,,2024-09-18 06:54:06.159608
+4691,PIT,09:40,BWI,10:45,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+9780,PIT,10:00,PHL,11:18,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+3576,PIT,10:01,EWR,11:35,United Airlines,UA,False,Operated by Republic Airways on behalf of United Airlines,2024-09-18 06:54:06.159608
+2413,PIT,10:22,PHL,11:34,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+1671,PIT,10:22,DEN,11:53,United Airlines,UA,False,,2024-09-18 06:54:06.159608
+6119,PIT,10:25,IAD,11:33,United Airlines,UA,False,Operated by Mesa Airlines on behalf of United Airlines,2024-09-18 06:54:06.159608
+4156,PIT,10:25,DTW,11:34,Delta Air Lines,DL,False,Operated by SkyWest Airlines on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+4735,PIT,10:25,DAL,12:10,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
+4465,PIT,10:27,DCA,11:38,American Airlines,AA,False,Operated by Republic Airways on behalf of American Airlines,2024-09-18 06:54:06.159608
+2255,PIT,10:43,CLT,12:14,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+5593,PIT,10:46,LGA,12:11,Delta Air Lines,DL,False,Operated by Republic Airways on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+3755,PIT,10:54,MSP,12:11,Delta Air Lines,DL,False,Operated by SkyWest Airlines on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+2187,PIT,11:00,ORD,11:43,United Airlines,UA,False,,2024-09-18 06:54:06.159608
+1380,PIT,11:16,ATL,13:02,Delta Air Lines,DL,False,,2024-09-18 06:54:06.159608
+5736,PIT,11:35,BOS,13:23,Delta Air Lines,DL,False,Operated by Republic Airways on behalf of Delta Air Lines,2024-09-18 06:54:06.159608
+3014,PIT,11:40,ORD,12:23,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+3537,PIT,11:50,EWR,13:25,United Airlines,UA,False,Operated by Republic Airways on behalf of United Airlines,2024-09-18 06:54:06.159608
+1583,PIT,11:54,DFW,13:51,American Airlines,AA,False,,2024-09-18 06:54:06.159608
+233,PIT,11:59,DUJ,12:54,Southern Airways Express,6G,False,,2024-09-18 06:54:06.159608
+1317,PIT,12:00,BNA,12:30,Southwest Airlines,WN,False,,2024-09-18 06:54:06.159608
