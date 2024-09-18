@@ -147,6 +147,6 @@ if __name__ == "__main__":
     get_wait_time_at_PIT()
 
     # only run the next script if the time is +/- 5min from the exact hour
-    current_minutes = production_load_time.minute
-    if (current_minutes <= 10) or (current_minutes >= 50):
-        get_flights_schedule_at_PIT()
+    # current_minutes = production_load_time.minute
+    # if (current_minutes <= 10) or (current_minutes >= 50):
+    #     get_flights_schedule_at_PIT()
