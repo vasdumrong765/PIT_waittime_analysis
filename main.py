@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()
 
-def get_wait_time_at_PIT():
+def get_wait_time_at_pit():
     print("Getting Security Wait time")
     # PGH airport website uses javascript elements that load after html
     # Need to combine selenium webpage interaction with bs4 to get the correct information
@@ -59,7 +59,7 @@ def get_wait_time_at_PIT():
     out.to_csv("PIT_security_wait_time.csv", mode='a', index=False, header=False)
     print("successfully ran the script - Get TSA wait time")
 
-def get_flights_schedule_at_PIT():
+def get_flights_schedule_at_pit():
     print("Getting flights schedule")
     ## Scrape flight schedule information using selenium Chrome and BeautifulSoup
     options = ChromeOptions()
@@ -144,9 +144,9 @@ if __name__ == "__main__":
     production_load_time = dt.now()
     print(production_load_time)
 
-    get_wait_time_at_PIT()
+    get_wait_time_at_pit()
 
     # only run the next script if the time is +/- 5min from the exact hour
     # current_minutes = production_load_time.minute
     # if (current_minutes <= 10) or (current_minutes >= 50):
-    #     get_flights_schedule_at_PIT()
+    #     get_flights_schedule_at_pit()
