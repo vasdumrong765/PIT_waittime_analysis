@@ -4,7 +4,7 @@ Pittsburgh International Airport (PIT) is a major airport serving the greater Pi
 
 The goal of this project is to collect and analyze security line wait time data at PIT, giving the general public an idea of what to expect for security wait times for passengers with different levels of access through the checkpoint.
 
-This is an ongoing project with limited amount of data. Sample data are plotted below by checkpoint location. 
+This is an ongoing project with limited amount of data. The pipeline is scheduled to run every 15 minute or whenever github actions have resources available to trigger the job. Sample data are plotted below by checkpoint location. 
 
 ![](wait_time_at_pit.png "Title")
 

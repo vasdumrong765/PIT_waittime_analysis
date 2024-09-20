@@ -12,7 +12,11 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import seaborn as sns
+import pytz
+
+sns.set_context("talk", font_scale=1)
 
 def get_wait_time_at_pit():
     print("Getting Security Wait time")
@@ -61,6 +65,20 @@ def get_wait_time_at_pit():
     out.to_csv("PIT_security_wait_time.csv", mode='a', index=False, header=False)
     print("successfully ran the script - Get TSA wait time")
 
+# Function to get color for day of the week
+def get_day_color(date):
+    day_of_week = date.strftime('%a')
+    colors = {
+        'Mon': 'yellow',
+        'Tue': 'pink',
+        'Wed': 'green',
+        'Thu': 'orange',
+        'Fri': 'blue',
+        'Sat': 'purple',
+        'Sun': 'red'
+    }
+    return colors.get(day_of_week, 'black')  # Default to black if not matched
+
 def plot_wait_time():
     print("Plotting wait time")
 
@@ -71,16 +89,27 @@ def plot_wait_time():
     wait_time_data['local_time'] = wait_time_data['time'].dt.tz_convert('US/Eastern')
 
     # col_wrap = 1, height = 2 and aspect=2
-    g = sns.FacetGrid(wait_time_data, col='checkpoint', col_wrap=4, height=4, aspect=1.5)
+    g = sns.FacetGrid(wait_time_data, col='checkpoint', col_wrap=2, height=4, aspect=1.5)
 
     # Map the lineplot to each subplot
     g.map(sns.lineplot, 'local_time', 'minutes', marker='o', markersize=4)
 
+    # Define US/Eastern timezone
+    us_eastern = pytz.timezone('US/Eastern')
+    
     # Customize the x-axis for each plot to show day of week and time, with ticks every 3 hours
     for ax in g.axes.flatten():
         ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%a %H:%M'))
         ax.xaxis.set_major_locator(plt.matplotlib.dates.HourLocator(interval=3))
         ax.tick_params(axis='x', rotation=45)  # Rotate x-axis labels for readability
+
+        # Get the tick labels
+        tick_labels = ax.get_xticklabels()
+        # Update the tick label colors based on the day of the week
+        for label in tick_labels:
+            date = mdates.num2date(label.get_position())[0]  # Convert tick position to datetime
+            label.set_color(get_day_color(date))  # Set the color based on the day
+
 
     # Add a common title and adjust layout
     # g.figure.suptitle('Line Plot by Category with Date and Time on X-Axis', y=0)
