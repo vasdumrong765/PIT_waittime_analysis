@@ -11,6 +11,8 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def get_wait_time_at_pit():
     print("Getting Security Wait time")
@@ -59,85 +61,36 @@ def get_wait_time_at_pit():
     out.to_csv("PIT_security_wait_time.csv", mode='a', index=False, header=False)
     print("successfully ran the script - Get TSA wait time")
 
-def get_flights_schedule_at_pit():
-    print("Getting flights schedule")
-    ## Scrape flight schedule information using selenium Chrome and BeautifulSoup
-    options = ChromeOptions()
-    options.add_argument("--headless")
-    browser = webdriver.Chrome(options=options)
-    browser.get("https://www.flightstats.com/v2/flight-tracker/departures/PIT")
-    delay = 10 # seconds
+def plot_wait_time():
+    print("Plotting wait time")
 
-    wait = WebDriverWait(browser, delay)
+    wait_time_data = pd.read_csv('PIT_security_wait_time.csv')
+    wait_time_data.columns = ['checkpoint', 'minutes', 'time']
 
-    html_source = browser.page_source
-    browser.quit()
+    wait_time_data['time'] = pd.to_datetime(wait_time_data['time']).dt.tz_localize('utc')
+    wait_time_data['local_time'] = wait_time_data['time'].dt.tz_convert('US/Eastern')
 
-    soup = BeautifulSoup(html_source,'html.parser')  
+    # col_wrap = 1, height = 2 and aspect=2
+    g = sns.FacetGrid(wait_time_data, col='checkpoint', col_wrap=4, height=4, aspect=1.5)
 
-    ## Search for flights data (in json format)
-    # store flight data strings
-    text = '__NEXT_DATA__ ='
-    search_text = soup.find_all(lambda tag: tag.name == "script" and text in tag.text)
-    if len(search_text)==1:
-        flight_data_str = search_text[0].text.strip()
+    # Map the lineplot to each subplot
+    g.map(sns.lineplot, 'local_time', 'minutes', marker='o', markersize=4)
 
-    # Extract the JSON portion from the string
-    start_index = flight_data_str.find('__NEXT_DATA__ = ') + len('__NEXT_DATA__ = ')
-    json_data_str = flight_data_str[start_index:]
-    json_data_str = json_data_str[:json_data_str.find('};')+1]  # Extract the JSON part
-    flight_data = json.loads(json_data_str)  # Parse the JSON
+    # Customize the x-axis for each plot to show day of week and time, with ticks every 3 hours
+    for ax in g.axes.flatten():
+        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%a %H:%M'))
+        ax.xaxis.set_major_locator(plt.matplotlib.dates.HourLocator(interval=3))
+        ax.tick_params(axis='x', rotation=45)  # Rotate x-axis labels for readability
 
-    ## Grab flight information from the parsed data
-    record_lookup_date = flight_data['props']['initialState']['flightTracker']['route']['header']['date']
-    record_lookup_date = dt.strptime(record_lookup_date, "%d-%b-%Y").strftime("%Y-%m-%d")
-    print(record_lookup_date)
+    # Add a common title and adjust layout
+    # g.figure.suptitle('Line Plot by Category with Date and Time on X-Axis', y=0)
+    g.set_axis_labels('Day of Week and Time')
 
-    flights = flight_data['props']['initialState']['flightTracker']['route']['flights']
+    # Adjust layout to avoid overlapping
+    plt.tight_layout()
+    # plt.show()
 
-    # Create a list to hold flight details
-    flight_records = []
-
-    # Iterate over each flight in the data
-    for flight in flights:
-        # Extract basic flight details
-        flight_number = flight['carrier']['flightNumber']
-        departure_airport = "PIT" # Fixed as all flights depart from PIT
-        departure_time = flight['departureTime']['time24']
-        arrival_airport = flight['airport']['fs']
-        arrival_time = flight['arrivalTime']['time24']
-        airline_name = flight['carrier']['name']
-        airline_code = flight['carrier']['fs']
-        
-        # Extract codeshare information (if available)
-        is_codeshare = flight.get('isCodeshare', False)
-        operating_carrier = flight.get('operatedBy', '')
-        
-        # Add flight details to the records list
-        flight_records.append({
-            'Flight_Number': flight_number,
-            'Departure_Airport': departure_airport,
-            'Departure_Time': departure_time,
-            'Arrival_Airport': arrival_airport,
-            'Arrival_Time': arrival_time,
-            'Airline': airline_name,
-            'Code': airline_code,
-            'Is_Codeshare': is_codeshare,
-            'Operating_Carrier': operating_carrier
-        })
-
-    # Create a pandas DataFrame from the flight records
-    df = pd.DataFrame(flight_records)
-    df['production_load_dt']=production_load_time
-    df_nocodeshare = df[df['Is_Codeshare']==False]
-
-    # Display the DataFrame
-    # print(df.head().T)
-    # print(df_nocodeshare.head().T)
-
-    df_nocodeshare.to_csv("PIT_schedule.csv", mode='a', index=False, header=False)
-    print("successfully ran the script - Get PIT schedule")
-
+    g.savefig("wait_time_at_pit.png") 
 
 if __name__ == "__main__":
     ## Record production_load_time
@@ -146,7 +99,4 @@ if __name__ == "__main__":
 
     get_wait_time_at_pit()
 
-    # only run the next script if the time is +/- 5min from the exact hour
-    # current_minutes = production_load_time.minute
-    # if (current_minutes <= 10) or (current_minutes >= 50):
-    #     get_flights_schedule_at_pit()
+    plot_wait_time()
