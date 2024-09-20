@@ -88,7 +88,7 @@ def plot_with_segmented_colors(ax, x, y):
     segments = np.concatenate([points[:-1], points[1:]], axis=1)
 
     # Define the colors based on whether the values are zero
-    colors = ['gray' if y_val == 0 else '#1f77b4' for y_val in y]
+    colors = ['#ff7f0e' if y_val == 0 else '#1f77b4' for y_val in y]
 
     # Create a LineCollection, passing the segments and colors
     lc = LineCollection(segments, colors=colors, linewidth=2)
@@ -131,7 +131,7 @@ def plot_wait_time():
         tick_labels = ax.get_xticklabels()
         # Update the tick label colors based on the day of the week
         for label in tick_labels:
-            date = mdates.num2date(label.get_position())[0]  # Convert tick position to datetime
+            date = mdates.num2date(label.get_position(), tz=us_eastern)[0]  # Convert tick position to datetime
             label.set_color(get_day_color(date))  # Set the color based on the day
 
     # Add a common title and adjust layout
