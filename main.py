@@ -1,4 +1,5 @@
-from datetime import datetime as dt, timedelta
+from datetime import datetime as dt
+import numpy as np
 import pandas as pd
 import json
 from bs4 import BeautifulSoup
@@ -13,9 +14,11 @@ import chromedriver_autoinstaller
 chromedriver_autoinstaller.install()
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from matplotlib.collections import LineCollection
 import seaborn as sns
 import pytz
 
+pd.set_option('display.max_colwidth', None)
 sns.set_context("talk", font_scale=1)
 
 def get_wait_time_at_pit():
@@ -79,29 +82,50 @@ def get_day_color(date):
     }
     return colors.get(day_of_week, 'black')  # Default to black if not matched
 
+# Function to plot each line with different colors for 0 and non-0 values
+def plot_with_segmented_colors(ax, x, y):
+    points = np.array([mdates.date2num(x), y]).T.reshape(-1, 1, 2)
+    segments = np.concatenate([points[:-1], points[1:]], axis=1)
+
+    # Define the colors based on whether the values are zero
+    colors = ['gray' if y_val == 0 else '#1f77b4' for y_val in y]
+
+    # Create a LineCollection, passing the segments and colors
+    lc = LineCollection(segments, colors=colors, linewidth=2)
+    
+    # Add the LineCollection to the plot
+    ax.add_collection(lc)
+    ax.autoscale()
+
 def plot_wait_time():
     print("Plotting wait time")
 
     wait_time_data = pd.read_csv('PIT_security_wait_time.csv')
     wait_time_data.columns = ['checkpoint', 'minutes', 'time']
 
+    # Define US/Eastern timezone
+    us_eastern = pytz.timezone('US/Eastern')
+
     wait_time_data['time'] = pd.to_datetime(wait_time_data['time']).dt.tz_localize('utc')
-    wait_time_data['local_time'] = wait_time_data['time'].dt.tz_convert('US/Eastern')
+    wait_time_data['local_time'] = wait_time_data['time'].dt.tz_convert(us_eastern)
+    wait_time_data = wait_time_data.sort_values(by='local_time')
+
+    wait_time_data['minutes'].fillna(0, inplace=True)
+    # print(wait_time_data.head())
 
     # col_wrap = 1, height = 2 and aspect=2
     g = sns.FacetGrid(wait_time_data, col='checkpoint', col_wrap=2, height=4, aspect=1.5)
 
     # Map the lineplot to each subplot
-    g.map(sns.lineplot, 'local_time', 'minutes', marker='o', markersize=4)
+    for ax, checkpoint in zip(g.axes.flat,wait_time_data['checkpoint'].unique()):
+        subset = wait_time_data[wait_time_data['checkpoint'] == checkpoint]
+        
+        # Plot the line with color based on value (gray for 0, blue for non-zero)
+        plot_with_segmented_colors(ax, subset['local_time'], subset['minutes'])
 
-    # Define US/Eastern timezone
-    us_eastern = pytz.timezone('US/Eastern')
-    
-    # Customize the x-axis for each plot to show day of week and time, with ticks every 3 hours
-    for ax in g.axes.flatten():
-        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%a %H:%M'))
+        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d %a %H:%M', tz=us_eastern))
         ax.xaxis.set_major_locator(plt.matplotlib.dates.HourLocator(interval=3))
-        ax.tick_params(axis='x', rotation=45)  # Rotate x-axis labels for readability
+        ax.tick_params(axis='x', rotation=90)  # Rotate x-axis labels for readability
 
         # Get the tick labels
         tick_labels = ax.get_xticklabels()
@@ -110,9 +134,7 @@ def plot_wait_time():
             date = mdates.num2date(label.get_position())[0]  # Convert tick position to datetime
             label.set_color(get_day_color(date))  # Set the color based on the day
 
-
     # Add a common title and adjust layout
-    # g.figure.suptitle('Line Plot by Category with Date and Time on X-Axis', y=0)
     g.set_axis_labels('Day of Week and Time')
 
     # Adjust layout to avoid overlapping
