@@ -4,7 +4,7 @@ Pittsburgh International Airport (PIT) is a major airport serving the greater Pi
 
 The goal of this project is to collect and analyze security line wait time data at PIT, giving the general public an idea of what to expect for security wait times for passengers with different levels of access through the checkpoint. *Based on the author prior experience and opinion, the actual wait time from waiting in line, ID check, and security screening of personal and carry-on items tend to be longer than the posted wait time.*
 
-This is an ongoing project with limited amount of data. The pipeline is scheduled to run every 15 minute or whenever github actions have resources available to trigger the job. Sample data are plotted below by checkpoint location. When the line color is orange, it means that the checkpoint is closed or no information available.
+This is an ongoing project with limited amount of data. Data were collected ~from Sept to Dec 2024. The pipeline is scheduled to run every 15 minute or whenever github actions have resources available to trigger the job. Sample data are plotted below by checkpoint location. When the line color is orange, it means that the checkpoint is closed or no information available. Currently, the automatic pipeline run is paused.
 
 ![](wait_time_at_pit.png "Title")
 
