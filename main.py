@@ -143,6 +143,104 @@ def plot_wait_time():
 
     g.savefig("wait_time_at_pit.png") 
 
+
+def plot_wait_time_average():
+    ## Import wait time data
+    # Make sure to use one directory up for data with ../
+    wait_time_data = pd.read_csv('PIT_security_wait_time.csv')
+    wait_time_data.columns = ['checkpoint', 'minutes', 'time']
+
+    # Define US/Eastern timezone
+    us_eastern = pytz.timezone('US/Eastern')
+    wait_time_data['time'] = pd.to_datetime(wait_time_data['time']).dt.tz_localize('utc')
+    wait_time_data['local_time'] = wait_time_data['time'].dt.tz_convert(us_eastern)
+    wait_time_data = wait_time_data.sort_values(by='local_time')
+
+    # Impute missing values as 0
+    wait_time_data.fillna({'minute':0}, inplace=True)
+
+    # Extract hour and day of week from the timestamp
+    wait_time_data["hour"] = wait_time_data["local_time"].dt.hour
+    wait_time_data["day_of_week"] = wait_time_data["local_time"].dt.day_name()
+    wait_time_data["day_order"] = wait_time_data["local_time"].dt.dayofweek  # Monday=0, Sunday=6
+
+    # Create a single timeline from Monday midnight to Sunday 11pm
+    wait_time_data["timeline"] = wait_time_data["day_order"] * 24 + wait_time_data["hour"]
+
+    # Group data by timeline and day of week, calculate mean and standard deviation
+    agg_wait_time_data = wait_time_data.groupby(["checkpoint","timeline", "day_of_week"]).agg(
+        mean_wait_time=("minutes", "mean"),
+        std_wait_time=("minutes", "std")
+    ).reset_index()
+
+    # print(agg_wait_time_data.head())
+
+    # Define colors for each day of the week
+    day_colors = {
+        "Monday": "#FFB3BA",
+        "Tuesday": "#FFDFBA",
+        "Wednesday": "#FFFFBA",
+        "Thursday": "#BAFFC9",
+        "Friday": "#BAE1FF",
+        "Saturday": "#D5BAFF",
+        "Sunday": "#FFC4BA",
+    }
+
+    # Set Seaborn style
+    sns.set_theme(style="dark", context="notebook")
+
+    # Customize grid to make it sparser
+    plt.rcParams["grid.color"] = "white"
+    plt.rcParams["grid.linestyle"] = "--"
+    plt.rcParams["grid.linewidth"] = 1
+    plt.rcParams["axes.facecolor"] = "#0d1117"
+    plt.rcParams["axes.edgecolor"] = "#444444"
+    plt.rcParams["figure.facecolor"] = "white"
+    plt.rcParams["xtick.color"] = "black"
+    plt.rcParams["ytick.color"] = "black"
+    plt.rcParams["axes.labelcolor"] = "black"
+    plt.rcParams["axes.titlecolor"] = "black"
+
+    g = sns.FacetGrid(wait_time_data, col='checkpoint', col_wrap=2, height=4, aspect=1.5)
+
+    # Map the lineplot to each subplot
+    for ax, checkpoint in zip(g.axes.flat, agg_wait_time_data['checkpoint'].unique()):
+        subset = agg_wait_time_data[agg_wait_time_data['checkpoint'] == checkpoint]
+            
+        for day in subset["day_of_week"].unique():
+            day_data = subset[subset["day_of_week"] == day]
+            color = day_colors.get(day, "black")
+            ax.plot(day_data["timeline"], day_data["mean_wait_time"], label=day, color=color)
+            ax.fill_between(
+                day_data["timeline"],
+                day_data["mean_wait_time"] - day_data["std_wait_time"],
+                day_data["mean_wait_time"] + day_data["std_wait_time"],
+                color=color,
+                alpha=0.2)
+
+
+        # Generate x-axis labels
+        xticks = range(0, 168)  # Tick for every hour
+        xlabels = [
+            f"{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][i // 24]} {i % 24:02d}:00"
+            if i % 3 == 0 else ""
+            for i in xticks
+        ]
+        ax.set_xticks(ticks=xticks, labels=xlabels, fontsize=6)
+        ax.tick_params(axis='x', rotation=90, which='both', bottom=True, top=False)  # Rotate x-axis labels for readability
+        ax.set_title(checkpoint)
+
+    # Add a common title and adjust layout
+    g.set_axis_labels('Day of Week and Time')
+    g.figure.suptitle('Average security wait time at PIT airport from Sept to Dec 2024')
+    g.set_ylabels("Wait time (minutes)")
+
+    # Adjust layout to avoid overlapping
+    plt.tight_layout()
+    # plt.show()
+    g.savefig("wait_time_at_pit.png") 
+
+
 if __name__ == "__main__":
     ## Record production_load_time
     production_load_time = dt.now()
@@ -150,4 +248,4 @@ if __name__ == "__main__":
 
     get_wait_time_at_pit()
 
-    plot_wait_time()
+    plot_wait_time_average()
