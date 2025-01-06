@@ -2,8 +2,8 @@ name: Run_web_scraper
 
 on:
     workflow_dispatch:
-    # schedule:
-    #    - cron: '*/15 * * * *' # Runs every 15 minutes
+    schedule:
+       - cron: '*/15 * * * *' # Runs every 15 minutes
 
 jobs:
     builds:
